@@ -79,37 +79,61 @@ st.markdown("""
         box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
     }
     
-    /* CSS Scientific Keyboard Matrix Grid */
-    .keyboard-matrix {
-        background-color: #22143b;
-        padding: 15px;
-        border-radius: 10px;
-        border: 2px solid #6b3ba7;
-        margin-bottom: 20px;
+    /* SCIENTIFIC COMPREHENSIVE FULL KEYBOARD GRID ENGINE */
+    .keyboard-container {
+        background-color: #1a0f30;
+        padding: 20px;
+        border-radius: 14px;
+        border: 3px solid #6b3ba7;
+        box-shadow: 0px 8px 24px rgba(0,0,0,0.3);
+        font-family: system-ui, -apple-system, sans-serif;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto 25px auto;
     }
-    .keyboard-row {
+    .k-row {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
+        width: 100%;
     }
-    .f-key {
-        background-color: #3a1d6e;
-        color: #dfa2ff !important;
-        padding: 10px;
-        border-radius: 5px;
-        font-weight: bold;
-        font-family: monospace;
-        flex: 1;
+    .k-key {
+        background-color: #311957;
+        color: #b392e6;
+        border-radius: 6px;
+        padding: 12px 4px;
         text-align: center;
-        margin: 0 4px;
-        border-bottom: 3px solid #1a0f30;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin: 0 3px;
+        flex: 1;
+        transition: all 0.3s ease;
+        border-bottom: 4px solid #140824;
+        user-select: none;
     }
-    .f-key.active {
-        background-color: #8a2be2;
-        color: white !important;
-        border-bottom: 3px solid #4a2380;
-        box-shadow: 0 0 10px #dfa2ff;
+    .k-key.active {
+        background-color: #a855f7 !important;
+        color: #ffffff !important;
+        border-bottom: 4px solid #6b21a8;
+        box-shadow: 0px 0px 15px #c084fc;
+        transform: translateY(1px);
+    }
+    .k-spacer {
+        flex: 0.5;
+    }
+    .k-spacer-large {
+        flex: 1.5;
+    }
+    .k-key.wide-2 { flex: 2; }
+    .k-key.wide-3 { flex: 3; }
+    .k-key.wide-space { flex: 7; background-color: #251245; }
+    .k-block-label {
+        color: #dfa2ff;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-bottom: 6px;
+        padding-left: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     .sidebar-link {
@@ -162,7 +186,7 @@ UI_TRANSLATIONS = {
     "Português": {
         "title": "Livro Interativo de Software de Teclado", "sub_title": "Arquitetura Avançada de Software", "btn_website": "🔗 Visite o Nosso Site",
         "nav_chapter": "📚 Selecionar Capítulo do Teclado:", "nav_lesson": "📖 Selecionar Lição:", "nav_lang": "🌐 Escolha o Idioma do Livro:",
-        "support_title": "🛠️ Infraestrutura de Suporte:", "practice_title": "🔍 Exemplos Práticos de Aplicação:", "audio_title": "🔊 Assistente de Leitura de Áudio:",
+        "support_title": "🛠️ Infraestrutura de Suporte:", "practice_title": "🔍 Exemplos Práticos de Aplicación:", "audio_title": "🔊 Assistente de Leitura de Áudio:",
         "spinner_msg": "Gerando faixa de áudio neural de alta fidelidade...", "target_key": "Tecla de Teclado Alvo:", "lesson_prefix": "Lição"
     },
     "中文": {
@@ -279,7 +303,7 @@ CORE_BOOK_DATABASE = {
     }
 }
 
-# Clone and populate dictionary elements dynamically to shield from runtime gaps
+# Clone data arrays completely
 CORE_BOOK_DATABASE["french_keyboard"] = CORE_BOOK_DATABASE["american_keyboard"]
 
 for book_key in ["american_keyboard", "french_keyboard"]:
@@ -328,63 +352,91 @@ with st.sidebar:
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
 st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsafe_allow_html=True)
 
-# PURE HIGH-CONTRAST CSS SCIENTIFIC KEYBOARD SCHEMATIC (GUARANTEED TO RENDER EVERYWHERE)
-layout_label = "🇺🇸 QWERTY Standard Map" if target_dir == "american_keyboard" else "🇫🇷 AZERTY Standard Map"
-st.write(f"### {layout_label} (Scientific Function Row Layout)")
+# THE MATRIX MAP GENERATOR
+layout_title_str = "🇺🇸 Modern American QWERTY Standard Map" if target_dir == "american_keyboard" else "🇫🇷 Modern French AZERTY Standard Map"
+st.write(f"### {layout_title_str}")
 
-def generate_key_html(label, current_idx, chosen_idx):
-    is_active = (current_idx == chosen_idx) or (current_idx == "1" and chosen_idx == "1")
-    active_class = "active" if is_active else ""
-    return f"<div class='f-key {active_class}'>{label}</div>"
+# CSS active state engine maps lesson_index to keys cleanly
+esc_act = "active" if lesson_index == "1" else ""
+f1_act = "active" if lesson_index == "2" else ""
+f2_act = "active" if lesson_index == "3" else ""
+f3_act = "active" if lesson_index == "4" else ""
+f4_act = "active" if lesson_index == "5" else ""
+f5_act = "active" if lesson_index == "6" else ""
+f6_act = "active" if lesson_index == "7" else ""
+f7_act = "active" if lesson_index == "8" else ""
+f8_act = "active" if lesson_index == "9" else ""
+f9_act = "active" if lesson_index == "10" else ""
+f10_act = "active" if lesson_index == "11" else ""
+f11_act = "active" if lesson_index == "12" else ""
+f12_act = "active" if lesson_index == "13" else ""
 
-idx_int = int(lesson_index)
-esc_html = generate_key_html("ESC", "1", lesson_index)
-f1_html = generate_key_html("F1", "2", lesson_index)
-f_keys_html = "".join([generate_key_html(f"F{i}", str(i), lesson_index) for i in range(2, 13)])
+# Alphanumeric row labels dynamically adapt to layout modes
+r1_keys = ["~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"]
+if target_dir == "american_keyboard":
+    r2_keys = ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"]
+    r3_keys = ["Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter"]
+    r4_keys = ["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift"]
+else:
+    r2_keys = ["Tab", "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "^", "$", "*"]
+    r3_keys = ["Caps", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "%", "Entrée"]
+    r4_keys = ["Shift", "W", "X", "C", "V", "B", "N", ",", ";", ":", "!", "Shift"]
 
 st.markdown(f"""
-<div class='keyboard-matrix'>
-    <div class='keyboard-row'>
-        {esc_html}
-        <div style='width: 20px;'></div>
-        {f1_html}
-        {f_keys_html}
+<div class='keyboard-container'>
+    <div class='k-block-label'>Primary Function Control Register Row</div>
+    <div class='k-row'>
+        <div class='k-key {esc_act}' style='flex:1.2;'>ESC</div>
+        <div class='k-spacer'></div>
+        <div class='k-key {f1_act}'>F1</div>
+        <div class='k-key {f2_act}'>F2</div>
+        <div class='k-key {f3_act}'>F3</div>
+        <div class='k-key {f4_act}'>F4</div>
+        <div class='k-spacer'></div>
+        <div class='k-key {f5_act}'>F5</div>
+        <div class='k-key {f6_act}'>F6</div>
+        <div class='k-key {f7_act}'>F7</div>
+        <div class='k-key {f8_act}'>F8</div>
+        <div class='k-spacer'></div>
+        <div class='k-key {f9_act}'>F9</div>
+        <div class='k-key {f10_act}'>F10</div>
+        <div class='k-key {f11_act}'>F11</div>
+        <div class='k-key {f12_act}'>F12</div>
+        <div class='k-spacer' style='flex:0.2;'></div>
+        <div class='k-key' style='font-size:0.65rem;'>PrtSc</div>
+        <div class='k-key' style='font-size:0.65rem;'>Scroll</div>
+        <div class='k-key' style='font-size:0.65rem;'>Pause</div>
     </div>
-</div>
-""", unsafe_allow_html=True)
-
-# Pull safe values out cleanly to avoid fallback failure NameErrors
-lesson_data = CORE_BOOK_DATABASE[target_dir][user_language][lesson_index]
-key_name = lesson_data["key_name"]
-definition = lesson_data["definition"]
-examples = lesson_data["examples"]
-
-st.markdown(f"""
-<div class='lesson-card'>
-    <h2>{current_ui["target_key"]} <span class='key-badge'>{key_name}</span></h2>
-    <p style='font-size:1.25rem; line-height:1.6; color:#1b0c3a; margin-top:15px;'><strong>{definition}</strong></p>
-</div>
-""", unsafe_allow_html=True)
-
-speech_text = f"{key_name}. {definition}. "
-st.write(f"### {current_ui['practice_title']}:")
-for example in examples:
-    st.markdown(f"<div class='example-box'><strong>{example}</strong></div>", unsafe_allow_html=True)
-    speech_text += f" {example}. "
-
-st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
-
-# Voiceover Generation Pipeline Blocks
-st.write(f"### {current_ui['audio_title']}:")
-audio_filename = f"audio_{target_dir}_{user_language}_lesson_{lesson_index}.mp3"
-with st.spinner(current_ui["spinner_msg"]):
-    try:
-        run_tts(speech_text, audio_filename, voice_profile)
-        if os.path.exists(audio_filename):
-            st.audio(audio_filename, format="audio/mp3")
-    except Exception as tts_err:
-        st.error(f"Audio Engine pipeline connectivity notification: {tts_err}")
-
-# Footer
-st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
-st.markdown("<div style='text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;'>🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663</div>", unsafe_allow_html=True)
+    <div style='height: 12px;'></div>
+    <div class='k-block-label'>Core Alphanumeric Base & Navigation Cluster Mapping Registers</div>
+    <div class='k-row'>
+        {"".join([f"<div class='k-key'>{k}</div>" if k != "Backspace" else f"<div class='k-key wide-2'>{k}</div>" for k in r1_keys])}
+        <div class='k-spacer' style='flex:0.2;'></div>
+        <div class='k-key'>Ins</div>
+        <div class='k-key'>Hm</div>
+        <div class='k-key'>PU</div>
+    </div>
+    <div class='k-row'>
+        {"".join([f"<div class='k-key'>{k}</div>" if k != "Tab" else f"<div class='k-key wide-2'>{k}</div>" for k in r2_keys])}
+        <div class='k-spacer' style='flex:0.2;'></div>
+        <div class='k-key'>Del</div>
+        <div class='k-key'>End</div>
+        <div class='k-key'>PD</div>
+    </div>
+    <div class='k-row'>
+        {"".join([f"<div class='k-key'>{k}</div>" if k not in ["Caps", "Enter", "Entrée"] else f"<div class='k-key wide-2'>{k}</div>" for k in r3_keys])}
+        <div class='k-spacer' style='flex:2.4;'></div>
+    </div>
+    <div class='k-row'>
+        {"".join([f"<div class='k-key'>{k}</div>" if k != "Shift" else f"<div class='k-key wide-3'>{k}</div>" for k in r4_keys])}
+        <div class='k-spacer' style='flex:1.3;'></div>
+        <div class='k-key'>▲</div>
+        <div class='k-spacer' style='flex:1.1;'></div>
+    </div>
+    <div class='k-row'>
+        <div class='k-key' style='flex:1.5;'>Ctrl</div>
+        <div class='k-key' style='flex:1.2;'>Win</div>
+        <div class='k-key' style='flex:1.5;'>Alt</div>
+        <div class='k-key wide-space'>Spacebar</div>
+        <div class='k-key' style='flex:1.5;'>AltGr</div>
+        <div class='k-key' style='flex:1.2
