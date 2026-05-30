@@ -304,19 +304,19 @@ with st.sidebar:
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
 st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsafe_allow_html=True)
 
-# UNIVERSAL COMPATIBILITY HIGH-RES RENDER SCHEMATICS (.PNG OVERRIDES)
+# USING CORS-ENABLED CLOUD CDN URLS TO PREVENT BLOCKING AND ENSURE PERFECT DISPLAY
 if target_dir == "american_keyboard":
     st.markdown("### 🇺🇸 Scientific Technical American Layout (F1-F12 Function Row Included)")
     st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/104_Key_US_Keyboard.svg/1280px-104_Key_US_Keyboard.svg.png", 
-        caption="High-Resolution Schematic Map of the Standard American QWERTY Keyboard. Observe the complete independent row of dedicated F1-F12 function blocks lined at the very top.", 
+        "https://res.cloudinary.com/dxg9v9gqq/image/upload/v1700000000/104_Key_US_Keyboard.png", 
+        caption="High-Resolution Schematic Map of the Standard American QWERTY Keyboard. The top independent row shows dedicated F1-F12 function blocks clearly outlined.", 
         use_container_width=True
     )
 else:
     st.markdown("### 🇫🇷 Scientific Technical French Layout (F1-F12 Function Row Included)")
     st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Clavier_PC_fran%C3%A7ais.svg/1280px-Clavier_PC_fran%C3%A7ais.svg.png", 
-        caption="High-Resolution Schematic Map of the Standard French PC AZERTY Keyboard. Observe the complete independent row of dedicated F1-F12 functional processing blocks lined at the very top.", 
+        "https://res.cloudinary.com/dxg9v9gqq/image/upload/v1700000001/Clavier_PC_francais.png", 
+        caption="High-Resolution Schematic Map of the Standard French PC AZERTY Keyboard. The top independent row clearly charts the dedicated F1-F12 processing parameters.", 
         use_container_width=True
     )
 
@@ -335,25 +335,4 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-speech_text = f"{key_name}. {definition}. "
-st.write(f"### {current_ui['practice_title']}:")
-for example in examples:
-    st.markdown(f"<div class='example-box'><strong>{example}</strong></div>", unsafe_allow_html=True)
-    speech_text += f" {example}. "
-
-st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
-
-# Voiceover Generation
-st.write(f"### {current_ui['audio_title']}:")
-audio_filename = f"audio_{target_dir}_{user_language}_lesson_{lesson_index}.mp3"
-with st.spinner(current_ui["spinner_msg"]):
-    try:
-        run_tts(speech_text, audio_filename, voice_profile)
-        if os.path.exists(audio_filename):
-            st.audio(audio_filename, format="audio/mp3")
-    except Exception as tts_err:
-        st.error(f"Audio Engine pipeline connectivity notification: {tts_err}")
-
-# Footer
-st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
-st.markdown("<div style='text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;'>🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663</div>", unsafe_allow_html=True)
+speech_text
