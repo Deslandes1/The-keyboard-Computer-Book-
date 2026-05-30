@@ -245,7 +245,7 @@ CORE_BOOK_DATABASE = {
                 "key_name": "F1 功能键",
                 "definition": "F1 键在所有的计算机软件生态中被统一指定为一键启动当前活动应用程序的官方帮助中心、用户使用手册或技术支持文档目录。",
                 "examples": [
-                    "案例 1: 如果你在使用 Microsoft Word 或 Excel时忘记了如何设置单元格格式，按下 F1 键可以立即在屏幕右侧调出微软官方帮助侧边栏。",
+                    "案例 1: 如果你在使用 Microsoft Word 或 Excel 时忘记了如何设置单元格格式，按下 F1 键可以立即在屏幕右侧调出微软官方帮助侧边栏。",
                     "案例 2: 在 Windows 文件资源管理器中浏览文件时，按下 F1 键会自动启动默认浏览器并搜索微软支持库以获取系统操作指南。",
                     "案例 3: 在 Adobe Photoshop 等专业设计工具中，按下 F1 键会暂停当前操作，并自动打开包含所有工具提示与快捷键指南的在线交互式数据库。"
                 ]
@@ -254,10 +254,10 @@ CORE_BOOK_DATABASE = {
     }
 }
 
-# Clone data structures for the French keyboard array and handle cross-references automatically
+# Clone arrays internally
 CORE_BOOK_DATABASE["french_keyboard"] = CORE_BOOK_DATABASE["american_keyboard"]
 
-# Generate placeholder data indices for remaining lesson blocks (3-20) across all 5 languages
+# Generate placeholder blocks
 for book_key in ["american_keyboard", "french_keyboard"]:
     for lang in ["English", "Français", "Español", "Português", "中文"]:
         for i in range(3, 21):
@@ -271,96 +271,63 @@ for book_key in ["american_keyboard", "french_keyboard"]:
                 df_name, df_def, df_ex = f"Marcador de Tecla #{i}", f"Definição educativa para o índice de tecla {i} em desenvolvimento.", [f"Exemplo 1 para a tecla {i}.", f"Exemplo 2 para a tecla {i}.", f"Exemplo 3 para a tecla {i}."]
             else:
                 df_name, df_def, df_ex = f"功能按键占位符 #{i}", f"第 {i} 个高级系统键盘按键的技术特征定义与操作说明正在编写中。", [f"关于按键 {i} 的软件应用操作案例一。", f"关于按键 {i} 的软件应用操作案例二。", f"关于按键 {i} 的软件应用操作案例三。"]
-                
             CORE_BOOK_DATABASE[book_key][lang][str(i)] = {"key_name": df_name, "definition": df_def, "examples": df_ex}
 
-# ================== SIDEBAR NAVIGATION & TRANSLATION ENGINE ==================
+# ================== SIDEBAR NAVIGATION ==================
 with st.sidebar:
     st.markdown('<div style="font-size:1.6rem; font-weight:800; color:#dfa2ff; letter-spacing:0.5px;">🌐 Globalinternet.py</div>', unsafe_allow_html=True)
-    
-    # 5-Language selection interface input dropdown matrix
     user_language = st.selectbox("🌐 Language / Idioma / 语言:", ["English", "Français", "Español", "Português", "中文"])
     current_ui = UI_TRANSLATIONS[user_language]
-    
     st.markdown(f'<div style="font-size:0.9rem; color:#b392e6; margin-bottom:10px;">{current_ui["sub_title"]}</div>', unsafe_allow_html=True)
-    
-    # Official Website Link Button
     st.markdown(f'<a href="https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/" target="_blank" class="sidebar-link">{current_ui["btn_website"]}</a>', unsafe_allow_html=True)
-    
     st.markdown("<hr style='border-color: #4a2380;'>", unsafe_allow_html=True)
     
-    # Navigation Matrix with translated chapter configurations
-    chapter = st.radio(
-        current_ui["nav_chapter"],
-        ["🇺🇸 American Keyboard Lessons", "🇫🇷 French Keyboard Lessons"]
-    )
-    
+    chapter = st.radio(current_ui["nav_chapter"], ["🇺🇸 American Keyboard Lessons", "🇫🇷 French Keyboard Lessons"])
     target_dir = "american_keyboard" if "American" in chapter else "french_keyboard"
     
-    # Assign specific voice accent mappings based on user language
-    voice_profiles = {
-        "English": "en-US-GuyNeural",
-        "Français": "fr-FR-HenriNeural",
-        "Español": "es-ES-AlvaroNeural",
-        "Português": "pt-BR-AntonioNeural",
-        "中文": "zh-CN-YunxiNeural"
-    }
+    voice_profiles = {"English": "en-US-GuyNeural", "Français": "fr-FR-HenriNeural", "Español": "es-ES-AlvaroNeural", "Português": "pt-BR-AntonioNeural", "中文": "zh-CN-YunxiNeural"}
     voice_profile = voice_profiles[user_language]
-        
     st.markdown("<hr style='border-color: #4a2380;'>", unsafe_allow_html=True)
     
-    # Build localized sequential numbers for selection dropdown menus
     if user_language == "中文":
         lesson_numbers = [f"{current_ui['lesson_prefix']} {i} 课" for i in range(1, 21)]
     else:
         lesson_numbers = [f"{current_ui['lesson_prefix']} {i}" for i in range(1, 21)]
-        
     selected_lesson_str = st.selectbox(current_ui["nav_lesson"], lesson_numbers)
-    # Parse lesson index integer regardless of active language text string length
     lesson_index = "".join(filter(str.isdigit, selected_lesson_str))
-    
     st.markdown("<hr style='border-color: #4a2380;'>", unsafe_allow_html=True)
     
-    # Infrastructure Core Support Contacts
     st.markdown(f'<div style="font-size:1.1rem; font-weight:700; color:#dfa2ff; margin-bottom:5px;">{current_ui["support_title"]}</div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div style="font-size:0.9rem; color:#e6daff; line-height:1.5;">
-        <strong>Phone:</strong> (509)-47385663<br>
-        <strong>Email:</strong> deslandes78@gmail.com
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<div style='font-size:0.9rem; color:#e6daff; line-height:1.5;'><strong>Phone:</strong> (509)-47385663<br><strong>Email:</strong> deslandes78@gmail.com</div>", unsafe_allow_html=True)
 
 # ================== MAIN APP WORKSPACE CONTENT ==================
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
 st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsafe_allow_html=True)
 
-# SCIENTIFIC KEYBOARD DIAGRAM MATRIX - Explicitly highlighting the full F1-F12 function rows
+# UNIVERSAL COMPATIBILITY HIGH-RES RENDER SCHEMATICS (.PNG OVERRIDES)
 if target_dir == "american_keyboard":
-    st.markdown("### 🇺🇸 Scientific Technical American Layout ($F1$-$F12$ Function Row Included)")
+    st.markdown("### 🇺🇸 Scientific Technical American Layout (F1-F12 Function Row Included)")
     st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/3/3a/104_Key_US_Keyboard.svg", 
-        caption="Scientific Map of the Standard 104-Key American QWERTY Layout. Note the top row dedicated to the F1-F12 engineering functions.", 
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/104_Key_US_Keyboard.svg/1280px-104_Key_US_Keyboard.svg.png", 
+        caption="High-Resolution Schematic Map of the Standard American QWERTY Keyboard. Observe the complete independent row of dedicated F1-F12 function blocks lined at the very top.", 
         use_container_width=True
     )
 else:
-    st.markdown("### 🇫🇷 Scientific Technical French Layout ($F1$-$F12$ Function Row Included)")
+    st.markdown("### 🇫🇷 Scientific Technical French Layout (F1-F12 Function Row Included)")
     st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/3/36/Clavier_PC_français.svg", 
-        caption="Scientific Map of the Standard French 105-Key AZERTY Layout. Note the complete top row mapping F1-F12 software operations.", 
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Clavier_PC_fran%C3%A7ais.svg/1280px-Clavier_PC_fran%C3%A7ais.svg.png", 
+        caption="High-Resolution Schematic Map of the Standard French PC AZERTY Keyboard. Observe the complete independent row of dedicated F1-F12 functional processing blocks lined at the very top.", 
         use_container_width=True
     )
 
 st.markdown("<br>", unsafe_allow_html=True)
-st.write(f"### **{selected_lesson_str}**")
 
-# Pull specific lesson dictionary data slice based on parameters securely
+# Fetch lesson components securely
 lesson_data = CORE_BOOK_DATABASE[target_dir][user_language].get(lesson_index)
-
 key_name = lesson_data["key_name"]
 definition = lesson_data["definition"]
 examples = lesson_data["examples"]
 
-# Render High-Contrast Clean Layout Lesson Matrix
 st.markdown(f"""
 <div class='lesson-card'>
     <h2>{current_ui["target_key"]} <span class='key-badge'>{key_name}</span></h2>
@@ -368,9 +335,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Compile deep language character speech string payload for TTS invocation
 speech_text = f"{key_name}. {definition}. "
-
 st.write(f"### {current_ui['practice_title']}:")
 for example in examples:
     st.markdown(f"<div class='example-box'><strong>{example}</strong></div>", unsafe_allow_html=True)
@@ -378,10 +343,9 @@ for example in examples:
 
 st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
 
-# Asynchronous Multi-Language Neural Voiceover Generation Block
+# Voiceover Generation
 st.write(f"### {current_ui['audio_title']}:")
 audio_filename = f"audio_{target_dir}_{user_language}_lesson_{lesson_index}.mp3"
-
 with st.spinner(current_ui["spinner_msg"]):
     try:
         run_tts(speech_text, audio_filename, voice_profile)
@@ -390,14 +354,6 @@ with st.spinner(current_ui["spinner_msg"]):
     except Exception as tts_err:
         st.error(f"Audio Engine pipeline connectivity notification: {tts_err}")
 
-# ================== SYSTEM PRODUCTION FOOTER ==================
+# Footer
 st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
-st.markdown(
-    """
-    <div style="text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;">
-        🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>
-        Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("<div style='text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;'>🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663</div>", unsafe_allow_html=True)
