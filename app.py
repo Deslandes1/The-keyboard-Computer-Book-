@@ -245,7 +245,7 @@ CORE_BOOK_DATABASE = {
                 "key_name": "F1 功能键",
                 "definition": "F1 键在所有的计算机软件生态中被统一指定为一键启动当前活动应用程序的官方帮助中心、用户使用手册或技术支持文档目录。",
                 "examples": [
-                    "案例 1: 如果你在使用 Microsoft Word 或 Excel 时忘记了如何设置单元格格式，按下 F1 键可以立即在屏幕右侧调出微软官方帮助侧边栏。",
+                    "案例 1: 如果你在使用 Microsoft Word 或 Excel时忘记了如何设置单元格格式，按下 F1 键可以立即在屏幕右侧调出微软官方帮助侧边栏。",
                     "案例 2: 在 Windows 文件资源管理器中浏览文件时，按下 F1 键会自动启动默认浏览器并搜索微软支持库以获取系统操作指南。",
                     "案例 3: 在 Adobe Photoshop 等专业设计工具中，按下 F1 键会暂停当前操作，并自动打开包含所有工具提示与快捷键指南的在线交互式数据库。"
                 ]
@@ -257,7 +257,7 @@ CORE_BOOK_DATABASE = {
 # Clone data structures for the French keyboard array and handle cross-references automatically
 CORE_BOOK_DATABASE["french_keyboard"] = CORE_BOOK_DATABASE["american_keyboard"]
 
-# Generate dummy placeholder metrics for lesson blocks 3 through 20 across all 5 languages
+# Generate placeholder data indices for remaining lesson blocks (3-20) across all 5 languages
 for book_key in ["american_keyboard", "french_keyboard"]:
     for lang in ["English", "Français", "Español", "Português", "中文"]:
         for i in range(3, 21):
@@ -334,15 +334,24 @@ with st.sidebar:
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
 st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsafe_allow_html=True)
 
-# DYNAMIC KEYBOARD IMAGE LAYOUT MATRIX CALLS
+# SCIENTIFIC KEYBOARD DIAGRAM MATRIX - Explicitly highlighting the full F1-F12 function rows
 if target_dir == "american_keyboard":
-    st.markdown("### 🇺🇸 US Keyboard Layout Matrix")
-    st.image("https://upload.wikimedia.org/wikipedia/commons/5/51/KB_United_States-NoAltGr.svg", caption="American QWERTY Keyboard Hardware Standard Diagram", use_container_width=True)
+    st.markdown("### 🇺🇸 Scientific Technical American Layout ($F1$-$F12$ Function Row Included)")
+    st.image(
+        "https://upload.wikimedia.org/wikipedia/commons/3/3a/104_Key_US_Keyboard.svg", 
+        caption="Scientific Map of the Standard 104-Key American QWERTY Layout. Note the top row dedicated to the F1-F12 engineering functions.", 
+        use_container_width=True
+    )
 else:
-    st.markdown("### 🇫🇷 French Keyboard Layout Matrix")
-    st.image("https://upload.wikimedia.org/wikipedia/commons/b/b9/KB_France.svg", caption="French AZERTY Keyboard Hardware Standard Diagram", use_container_width=True)
+    st.markdown("### 🇫🇷 Scientific Technical French Layout ($F1$-$F12$ Function Row Included)")
+    st.image(
+        "https://upload.wikimedia.org/wikipedia/commons/3/36/Clavier_PC_français.svg", 
+        caption="Scientific Map of the Standard French 105-Key AZERTY Layout. Note the complete top row mapping F1-F12 software operations.", 
+        use_container_width=True
+    )
 
 st.markdown("<br>", unsafe_allow_html=True)
+st.write(f"### **{selected_lesson_str}**")
 
 # Pull specific lesson dictionary data slice based on parameters securely
 lesson_data = CORE_BOOK_DATABASE[target_dir][user_language].get(lesson_index)
