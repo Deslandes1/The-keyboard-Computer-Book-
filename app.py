@@ -186,7 +186,7 @@ UI_TRANSLATIONS = {
     "Português": {
         "title": "Livro Interativo de Software de Teclado", "sub_title": "Arquitetura Avançada de Software", "btn_website": "🔗 Visite o Nosso Site",
         "nav_chapter": "📚 Selecionar Capítulo do Teclado:", "nav_lesson": "📖 Selecionar Lição:", "nav_lang": "🌐 Escolha o Idioma do Livro:",
-        "support_title": "🛠️ Infraestrutura de Suporte:", "practice_title": "🔍 Exemplos Práticos de Aplicación:", "audio_title": "🔊 Assistente de Leitura de Áudio:",
+        "support_title": "🛠️ Infraestrutura de Suporte:", "practice_title": "🔍 Exemplos Práticos de Aplicação:", "audio_title": "🔊 Assistente de Leitura de Áudio:",
         "spinner_msg": "Gerando faixa de áudio neural de alta fidelidade...", "target_key": "Tecla de Teclado Alvo:", "lesson_prefix": "Lição"
     },
     "中文": {
@@ -356,7 +356,7 @@ st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsa
 layout_title_str = "🇺🇸 Modern American QWERTY Standard Map" if target_dir == "american_keyboard" else "🇫🇷 Modern French AZERTY Standard Map"
 st.write(f"### {layout_title_str}")
 
-# CSS active state engine maps lesson_index to keys cleanly
+# Dynamic calculation of visual active state toggles
 esc_act = "active" if lesson_index == "1" else ""
 f1_act = "active" if lesson_index == "2" else ""
 f2_act = "active" if lesson_index == "3" else ""
@@ -371,7 +371,7 @@ f10_act = "active" if lesson_index == "11" else ""
 f11_act = "active" if lesson_index == "12" else ""
 f12_act = "active" if lesson_index == "13" else ""
 
-# Alphanumeric row labels dynamically adapt to layout modes
+# Layout key maps parsing matrices
 r1_keys = ["~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"]
 if target_dir == "american_keyboard":
     r2_keys = ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"]
@@ -381,6 +381,12 @@ else:
     r2_keys = ["Tab", "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "^", "$", "*"]
     r3_keys = ["Caps", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "%", "Entrée"]
     r4_keys = ["Shift", "W", "X", "C", "V", "B", "N", ",", ";", ":", "!", "Shift"]
+
+# Compile functional string structures safely to prevent unclosed syntax errors
+r1_html = "".join([f"<div class='k-key'>{k}</div>" if k != "Backspace" else f"<div class='k-key wide-2'>{k}</div>" for k in r1_keys])
+r2_html = "".join([f"<div class='k-key'>{k}</div>" if k != "Tab" else f"<div class='k-key wide-2'>{k}</div>" for k in r2_keys])
+r3_html = "".join([f"<div class='k-key'>{k}</div>" if k not in ["Caps", "Enter", "Entrée"] else f"<div class='k-key wide-2'>{k}</div>" for k in r3_keys])
+r4_html = "".join([f"<div class='k-key'>{k}</div>" if k != "Shift" else f"<div class='k-key wide-3'>{k}</div>" for k in r4_keys])
 
 st.markdown(f"""
 <div class='keyboard-container'>
@@ -410,25 +416,25 @@ st.markdown(f"""
     <div style='height: 12px;'></div>
     <div class='k-block-label'>Core Alphanumeric Base & Navigation Cluster Mapping Registers</div>
     <div class='k-row'>
-        {"".join([f"<div class='k-key'>{k}</div>" if k != "Backspace" else f"<div class='k-key wide-2'>{k}</div>" for k in r1_keys])}
+        {r1_html}
         <div class='k-spacer' style='flex:0.2;'></div>
         <div class='k-key'>Ins</div>
         <div class='k-key'>Hm</div>
         <div class='k-key'>PU</div>
     </div>
     <div class='k-row'>
-        {"".join([f"<div class='k-key'>{k}</div>" if k != "Tab" else f"<div class='k-key wide-2'>{k}</div>" for k in r2_keys])}
+        {r2_html}
         <div class='k-spacer' style='flex:0.2;'></div>
         <div class='k-key'>Del</div>
         <div class='k-key'>End</div>
         <div class='k-key'>PD</div>
     </div>
     <div class='k-row'>
-        {"".join([f"<div class='k-key'>{k}</div>" if k not in ["Caps", "Enter", "Entrée"] else f"<div class='k-key wide-2'>{k}</div>" for k in r3_keys])}
+        {r3_html}
         <div class='k-spacer' style='flex:2.4;'></div>
     </div>
     <div class='k-row'>
-        {"".join([f"<div class='k-key'>{k}</div>" if k != "Shift" else f"<div class='k-key wide-3'>{k}</div>" for k in r4_keys])}
+        {r4_html}
         <div class='k-spacer' style='flex:1.3;'></div>
         <div class='k-key'>▲</div>
         <div class='k-spacer' style='flex:1.1;'></div>
@@ -439,4 +445,48 @@ st.markdown(f"""
         <div class='k-key' style='flex:1.5;'>Alt</div>
         <div class='k-key wide-space'>Spacebar</div>
         <div class='k-key' style='flex:1.5;'>AltGr</div>
-        <div class='k-key' style='flex:1.2
+        <div class='k-key' style='flex:1.2;'>Win</div>
+        <div class='k-key' style='flex:1.5;'>Ctrl</div>
+        <div class='k-spacer' style='flex:0.2;'></div>
+        <div class='k-key'>◀</div>
+        <div class='k-key'>▼</div>
+        <div class='k-key'>▶</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Safe database extraction parameters
+lesson_data = CORE_BOOK_DATABASE[target_dir][user_language][lesson_index]
+key_name = lesson_data["key_name"]
+definition = lesson_data["definition"]
+examples = lesson_data["examples"]
+
+st.markdown(f"""
+<div class='lesson-card'>
+    <h2>{current_ui["target_key"]} <span class='key-badge'>{key_name}</span></h2>
+    <p style='font-size:1.25rem; line-height:1.6; color:#1b0c3a; margin-top:15px;'><strong>{definition}</strong></p>
+</div>
+""", unsafe_allow_html=True)
+
+speech_text = f"{key_name}. {definition}. "
+st.write(f"### {current_ui['practice_title']}:")
+for example in examples:
+    st.markdown(f"<div class='example-box'><strong>{example}</strong></div>", unsafe_allow_html=True)
+    speech_text += f" {example}. "
+
+st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
+
+# Voiceover Generation Pipeline Blocks
+st.write(f"### {current_ui['audio_title']}:")
+audio_filename = f"audio_{target_dir}_{user_language}_lesson_{lesson_index}.mp3"
+with st.spinner(current_ui["spinner_msg"]):
+    try:
+        run_tts(speech_text, audio_filename, voice_profile)
+        if os.path.exists(audio_filename):
+            st.audio(audio_filename, format="audio/mp3")
+    except Exception as tts_err:
+        st.error(f"Audio Engine pipeline connectivity notification: {tts_err}")
+
+# Footer
+st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;'>🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663</div>", unsafe_allow_html=True)
