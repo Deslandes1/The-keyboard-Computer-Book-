@@ -42,6 +42,29 @@ st.markdown("""
         font-style: italic;
     }
     
+    /* Beautiful Custom Login Screen Box */
+    .login-container {
+        background-color: #ffffff;
+        border: 3px solid #8a2be2;
+        padding: 40px;
+        border-radius: 16px;
+        max-width: 500px;
+        margin: 80px auto;
+        text-align: center;
+        box-shadow: 0px 10px 30px rgba(107, 59, 167, 0.15);
+    }
+    .login-logo {
+        font-size: 5rem;
+        margin-bottom: 10px;
+        color: #8a2be2;
+    }
+    .login-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #31145a;
+        margin-bottom: 25px;
+    }
+    
     /* Lesson Card Box */
     .lesson-card { 
         background-color: #ffffff; 
@@ -154,6 +177,31 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+# ================== INITIALIZE SESSION STATE FOR AUTHENTICATION ==================
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+# ================== LOGIN INTERFACE GATE ==================
+if not st.session_state["authenticated"]:
+    st.markdown("""
+        <div class="login-container">
+            <div class="login-logo">⌨️</div>
+            <div class="login-title">GlobalInternet Academy Login</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Render input forms natively center-constrained via Streamlit columns
+    _, center_col, _ = st.columns([1, 2, 1])
+    with center_col:
+        input_password = st.text_input("Enter Gateway Authentication Password:", type="password", help="Input the structural system access security code.")
+        if st.button("Unlock Digital Book System 🚀", use_container_width=True):
+            if input_password == "20082010":
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error("Access Refused: Invalid Gate Cryptographic Token. Please try again.")
+    st.stop()  # Halt execution so non-authenticated users cannot access main blocks
 
 # ================== ASYNCHRONOUS TTS CORE ==================
 async def generate_voiceover(text_to_speak, output_audio_path, voice_name):
@@ -347,6 +395,12 @@ with st.sidebar:
     
     st.markdown(f'<div style="font-size:1.1rem; font-weight:700; color:#dfa2ff; margin-bottom:5px;">{current_ui["support_title"]}</div>', unsafe_allow_html=True)
     st.markdown("<div style='font-size:0.9rem; color:#e6daff; line-height:1.5;'><strong>Phone:</strong> (509)-47385663<br><strong>Email:</strong> deslandes78@gmail.com</div>", unsafe_allow_html=True)
+    
+    # SYSTEM LOGOUT CONTROL INFRASTRUCTURE BUTTON
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    if st.button("🔴 Close Book Session (Logout)", use_container_width=True):
+        st.session_state["authenticated"] = False
+        st.rerun()
 
 # ================== MAIN APP WORKSPACE CONTENT ==================
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
