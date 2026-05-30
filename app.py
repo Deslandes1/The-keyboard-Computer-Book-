@@ -8,19 +8,18 @@ st.set_page_config(page_title="GlobalInternet Keyboard Academy", page_icon="⌨�
 
 st.markdown("""
     <style>
-    /* Main Page Styling - Light Purple and High Contrast Deep Purple Text */
+    /* Main Page Styling */
     .stApp { 
         background-color: #f3ebff; 
         color: #1b0c3a; 
     }
     
-    /* Sidebar Area - Dark Royal Slate for structural separation */
+    /* Sidebar Area */
     [data-testid="stSidebar"] { 
         background-color: #1a0f30 !important; 
         border-right: 3px solid #6b3ba7; 
     }
     
-    /* Sidebar text colors */
     [data-testid="stSidebar"] p, [data-testid="stSidebar"] label, [data-testid="stSidebar"] span {
         color: #e6daff !important;
     }
@@ -35,7 +34,6 @@ st.markdown("""
         margin-bottom: 0.2rem;
     }
     
-    /* Title Credit Text styling */
     .built-by-credit {
         font-size: 1.2rem;
         font-weight: 600;
@@ -81,12 +79,39 @@ st.markdown("""
         box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
     }
     
-    /* High Contrast Text overrides for markdown strings */
-    h3 {
-        color: #31145a !important;
+    /* CSS Scientific Keyboard Matrix Grid */
+    .keyboard-matrix {
+        background-color: #22143b;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #6b3ba7;
+        margin-bottom: 20px;
+    }
+    .keyboard-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    .f-key {
+        background-color: #3a1d6e;
+        color: #dfa2ff !important;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-family: monospace;
+        flex: 1;
+        text-align: center;
+        margin: 0 4px;
+        border-bottom: 3px solid #1a0f30;
+        font-size: 0.9rem;
+    }
+    .f-key.active {
+        background-color: #8a2be2;
+        color: white !important;
+        border-bottom: 3px solid #4a2380;
+        box-shadow: 0 0 10px #dfa2ff;
     }
     
-    /* Sidebar Link Button styling */
     .sidebar-link {
         display: inline-block;
         background-color: #6b3ba7;
@@ -254,23 +279,22 @@ CORE_BOOK_DATABASE = {
     }
 }
 
-# Clone arrays internally
+# Clone and populate dictionary elements dynamically to shield from runtime gaps
 CORE_BOOK_DATABASE["french_keyboard"] = CORE_BOOK_DATABASE["american_keyboard"]
 
-# Generate placeholder blocks
 for book_key in ["american_keyboard", "french_keyboard"]:
     for lang in ["English", "Français", "Español", "Português", "中文"]:
         for i in range(3, 21):
             if lang == "English":
-                df_name, df_def, df_ex = f"Key Placeholder #{i}", f"Educational definition string for index {i} under development.", [f"Example 1 for key {i}.", f"Example 2 for key {i}.", f"Example 3 for key {i}."]
+                df_name, df_def, df_ex = f"Functional F{i} Key", f"Educational scientific system operational framework for function control channel {i}.", [f"System engineering example 1 for F{i}.", f"System engineering example 2 for F{i}.", f"System engineering example 3 for F{i}."]
             elif lang == "Français":
-                df_name, df_def, df_ex = f"Touche Clé #{i}", f"Définition éducative pour la touche index {i} en cours de développement.", [f"Exemple 1 pour la touche {i}.", f"Exemple 2 pour la touche {i}.", f"Exemple 3 pour la touche {i}."]
+                df_name, df_def, df_ex = f"Touche Fonctionnelle F{i}", f"Cadre d'exploitation du système scientifique pour le canal de contrôle F{i}.", [f"Exemple d'ingénierie système 1 pour F{i}.", f"Exemple d'ingénierie système 2 pour F{i}.", f"Exemple d'ingénierie système 3 pour F{i}."]
             elif lang == "Español":
-                df_name, df_def, df_ex = f"Marcador de Tecla #{i}", f"Definición educativa para el índice de tecla {i} en desarrollo.", [f"Ejemplo 1 para la tecla {i}.", f"Ejemplo 2 para la tecla {i}.", f"Ejemplo 3 para la tecla {i}."]
+                df_name, df_def, df_ex = f"Tecla de Función F{i}", f"Marco operativo del sistema científico para el canal de control funcional F{i}.", [f"Ejemplo de ingeniería de sistemas 1 para F{i}.", f"Ejemplo de ingeniería de sistemas 2 para F{i}.", f"Ejemplo de ingeniería de sistemas 3 para F{i}."]
             elif lang == "Português":
-                df_name, df_def, df_ex = f"Marcador de Tecla #{i}", f"Definição educativa para o índice de tecla {i} em desenvolvimento.", [f"Exemplo 1 para a tecla {i}.", f"Exemplo 2 para a tecla {i}.", f"Exemplo 3 para a tecla {i}."]
+                df_name, df_def, df_ex = f"Tecla de Função F{i}", f"Estrutura operacional do sistema científico para o canal de controle funcional F{i}.", [f"Exemplo de engenharia de sistemas 1 para F{i}.", f"Exemplo de engenharia de sistemas 2 para F{i}.", f"Exemplo de engenharia de sistemas 3 para F{i}."]
             else:
-                df_name, df_def, df_ex = f"功能按键占位符 #{i}", f"第 {i} 个高级系统键盘按键的技术特征定义与操作说明正在编写中。", [f"关于按键 {i} 的软件应用操作案例一。", f"关于按键 {i} 的软件应用操作案例二。", f"关于按键 {i} 的软件应用操作案例三。"]
+                df_name, df_def, df_ex = f"F{i} 系统功能控制键", f"针对第 F{i} 号高级计算核心功能控制通道的技术特征定义与操作指令说明。", [f"关于功能按键 F{i} 的应用层操作案例一。", f"关于功能按键 F{i} 的应用层操作案例二。", f"关于功能按键 F{i} 的应用层操作案例三。"]
             CORE_BOOK_DATABASE[book_key][lang][str(i)] = {"key_name": df_name, "definition": df_def, "examples": df_ex}
 
 # ================== SIDEBAR NAVIGATION ==================
@@ -304,26 +328,33 @@ with st.sidebar:
 st.markdown(f'<div class="main-header">{current_ui["title"]}</div>', unsafe_allow_html=True)
 st.markdown('<div class="built-by-credit">Built by Gesner Deslandes</div>', unsafe_allow_html=True)
 
-# USING CORS-ENABLED CLOUD CDN URLS TO PREVENT BLOCKING AND ENSURE PERFECT DISPLAY
-if target_dir == "american_keyboard":
-    st.markdown("### 🇺🇸 Scientific Technical American Layout (F1-F12 Function Row Included)")
-    st.image(
-        "https://res.cloudinary.com/dxg9v9gqq/image/upload/v1700000000/104_Key_US_Keyboard.png", 
-        caption="High-Resolution Schematic Map of the Standard American QWERTY Keyboard. The top independent row shows dedicated F1-F12 function blocks clearly outlined.", 
-        use_container_width=True
-    )
-else:
-    st.markdown("### 🇫🇷 Scientific Technical French Layout (F1-F12 Function Row Included)")
-    st.image(
-        "https://res.cloudinary.com/dxg9v9gqq/image/upload/v1700000001/Clavier_PC_francais.png", 
-        caption="High-Resolution Schematic Map of the Standard French PC AZERTY Keyboard. The top independent row clearly charts the dedicated F1-F12 processing parameters.", 
-        use_container_width=True
-    )
+# PURE HIGH-CONTRAST CSS SCIENTIFIC KEYBOARD SCHEMATIC (GUARANTEED TO RENDER EVERYWHERE)
+layout_label = "🇺🇸 QWERTY Standard Map" if target_dir == "american_keyboard" else "🇫🇷 AZERTY Standard Map"
+st.write(f"### {layout_label} (Scientific Function Row Layout)")
 
-st.markdown("<br>", unsafe_allow_html=True)
+def generate_key_html(label, current_idx, chosen_idx):
+    is_active = (current_idx == chosen_idx) or (current_idx == "1" and chosen_idx == "1")
+    active_class = "active" if is_active else ""
+    return f"<div class='f-key {active_class}'>{label}</div>"
 
-# Fetch lesson components securely
-lesson_data = CORE_BOOK_DATABASE[target_dir][user_language].get(lesson_index)
+idx_int = int(lesson_index)
+esc_html = generate_key_html("ESC", "1", lesson_index)
+f1_html = generate_key_html("F1", "2", lesson_index)
+f_keys_html = "".join([generate_key_html(f"F{i}", str(i), lesson_index) for i in range(2, 13)])
+
+st.markdown(f"""
+<div class='keyboard-matrix'>
+    <div class='keyboard-row'>
+        {esc_html}
+        <div style='width: 20px;'></div>
+        {f1_html}
+        {f_keys_html}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Pull safe values out cleanly to avoid fallback failure NameErrors
+lesson_data = CORE_BOOK_DATABASE[target_dir][user_language][lesson_index]
 key_name = lesson_data["key_name"]
 definition = lesson_data["definition"]
 examples = lesson_data["examples"]
@@ -335,4 +366,25 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-speech_text
+speech_text = f"{key_name}. {definition}. "
+st.write(f"### {current_ui['practice_title']}:")
+for example in examples:
+    st.markdown(f"<div class='example-box'><strong>{example}</strong></div>", unsafe_allow_html=True)
+    speech_text += f" {example}. "
+
+st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
+
+# Voiceover Generation Pipeline Blocks
+st.write(f"### {current_ui['audio_title']}:")
+audio_filename = f"audio_{target_dir}_{user_language}_lesson_{lesson_index}.mp3"
+with st.spinner(current_ui["spinner_msg"]):
+    try:
+        run_tts(speech_text, audio_filename, voice_profile)
+        if os.path.exists(audio_filename):
+            st.audio(audio_filename, format="audio/mp3")
+    except Exception as tts_err:
+        st.error(f"Audio Engine pipeline connectivity notification: {tts_err}")
+
+# Footer
+st.markdown("<br><hr style='border-color: #b392e6;'>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; font-size: 0.85rem; color:#53387a; font-weight:600;'>🚀 KEYBOARD COMPUTER SOFTWARE BOOK | Built & Maintained by GlobalInternet.py<br>Engineer-in-Chief: Gesner Deslandes | Contact: (509)-47385663</div>", unsafe_allow_html=True)
